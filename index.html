@@ -10,13 +10,10 @@
     <div id="vueApp">
       <h1>Belajar VueJS</h1>
 
-      <ol v-if="status">
-        <li v-for="subject in subjects" :key="subject.title">
-          {{ subject.title }} - Type - {{ subject.type }}
-        </li>
-      </ol>
+      <input type="text" v-model="name" />
+      <input type="number" v-model="age" />
 
-      <p v-else>No Subject Yet</p>
+      <p>Nama {{ name }} , Umur {{ age }} , {{ expression }}</p>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -24,13 +21,18 @@
       const sample = {
         data() {
           return {
-            subjects: [
-              { title: "JavaScript", type: "Native" },
-              { title: "Vue", type: "Framework" },
-              { title: "React", type: "Framework" },
-            ],
-            status: true,
+            name: "Dede Sunarwan",
+            age: 19,
           };
+        },
+        computed: {
+          expression() {
+            if (this.age >= 50) {
+              return "Sudah tua";
+            } else {
+              return "Masih muda";
+            }
+          },
         },
       };
 
