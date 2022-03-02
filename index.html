@@ -10,33 +10,26 @@
     <div id="vueApp">
       <h1>Belajar VueJS</h1>
 
-      <input type="text" v-model="name" />
-      <input type="number" v-model="age" />
-
-      <p>Nama {{ name }} , Umur {{ age }} , {{ expression }}</p>
+      <blog-post title="My journey with Vue" desc="First Journey"></blog-post>
+      <blog-post title="Blogging with Vue" desc="First blog"></blog-post>
+      <blog-post title="Why Vue is so fun" desc="Fist experience"></blog-post>
     </div>
+
+    <script type="text/x-template" id="blog-template">
+      <h3>{{ title }} : </h3>
+      <p>{{ desc }} </p>
+    </script>
 
     <script src="https://unpkg.com/vue@3"></script>
     <script>
-      const sample = {
-        data() {
-          return {
-            name: "Dede Sunarwan",
-            age: 19,
-          };
-        },
-        computed: {
-          expression() {
-            if (this.age >= 50) {
-              return "Sudah tua";
-            } else {
-              return "Masih muda";
-            }
-          },
-        },
-      };
+      const app = Vue.createApp({});
 
-      Vue.createApp(sample).mount("#vueApp");
+      app.component("blog-post", {
+        props: ["title", "desc"],
+        template: "#blog-template",
+      });
+
+      app.mount("#vueApp");
     </script>
   </body>
 </html>
