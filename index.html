@@ -9,7 +9,7 @@
   <body>
     <div id="vueApp">
       <h1>Belajar {{ subject }}</h1>
-      <p>Number: {{ number }}</p>
+      <button @click="makeItFun()">Make it Fun</button>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -21,10 +21,10 @@
             number: 0,
           };
         },
-        mounted() {
-          setInterval(() => {
-            this.number++;
-          }, 500);
+        methods: {
+          makeItFun() {
+            this.subject = this.subject + " !!";
+          },
         },
       };
 
