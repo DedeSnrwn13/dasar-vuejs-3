@@ -10,11 +10,13 @@
     <div id="vueApp">
       <h1>Belajar VueJS</h1>
 
-      <ol>
+      <ol v-if="status">
         <li v-for="subject in subjects" :key="subject.title">
           {{ subject.title }} - Type - {{ subject.type }}
         </li>
       </ol>
+
+      <p v-else>No Subject Yet</p>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -27,6 +29,7 @@
               { title: "Vue", type: "Framework" },
               { title: "React", type: "Framework" },
             ],
+            status: true,
           };
         },
       };
