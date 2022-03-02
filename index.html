@@ -10,19 +10,45 @@
     <div id="vueApp">
       <h1>Belajar VueJS</h1>
 
-      <blog-post title="My journey with Vue" desc="First Journey"></blog-post>
-      <blog-post title="Blogging with Vue" desc="First blog"></blog-post>
-      <blog-post title="Why Vue is so fun" desc="Fist experience"></blog-post>
+      <blog-post
+        title="My journey with Vue"
+        desc="First Journey"
+        readPost="reading"
+      ></blog-post>
+      <blog-post
+        title="Blogging with Vue"
+        desc="First blog"
+        readPost="reading"
+      ></blog-post>
+      <blog-post
+        title="Why Vue is so fun"
+        desc="Fist experience"
+        readPost="reading"
+      ></blog-post>
+
+      <p>Total selesai: {{ total }}</p>
     </div>
 
     <script type="text/x-template" id="blog-template">
       <h3>{{ title }} : </h3>
       <p>{{ desc }} </p>
+      <button @click="$emit('readPost', 10)">Selesai</button>
     </script>
 
     <script src="https://unpkg.com/vue@3"></script>
     <script>
-      const app = Vue.createApp({});
+      const app = Vue.createApp({
+        data() {
+          return {
+            total: 0,
+          };
+        },
+        methods: {
+          reading(num) {
+            this.total = this.total + num;
+          },
+        },
+      });
 
       app.component("blog-post", {
         props: ["title", "desc"],
