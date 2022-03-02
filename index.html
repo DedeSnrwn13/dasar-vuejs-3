@@ -8,12 +8,13 @@
   </head>
   <body>
     <div id="vueApp">
-      <input type="text" v-model="subject" />
-      <h1>Belajar {{ subject }}</h1>
-      <button @click="makeItFun()">Make it Fun</button>
-      <button @click="check()">Check Subject</button>
+      <h1>Belajar VueJS</h1>
 
-      <p>Nilai: {{ score }}</p>
+      <ol>
+        <li v-for="subject in subjects" :key="subject.title">
+          {{ subject.title }} - Type - {{ subject.type }}
+        </li>
+      </ol>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -21,21 +22,12 @@
       const sample = {
         data() {
           return {
-            subject: "Vue.js",
-            score: 0,
+            subjects: [
+              { title: "JavaScript", type: "Native" },
+              { title: "Vue", type: "Framework" },
+              { title: "React", type: "Framework" },
+            ],
           };
-        },
-        methods: {
-          makeItFun() {
-            this.subject = this.subject + " !!";
-          },
-          check() {
-            if (this.subject === "Vue.JS") {
-              this.score = 100;
-            } else {
-              this.score = -50;
-            }
-          },
         },
       };
 
