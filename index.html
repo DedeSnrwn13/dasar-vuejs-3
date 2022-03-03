@@ -5,57 +5,97 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Belajar Vue 3</title>
+    <link rel="stylesheet" href="./main.css" />
   </head>
   <body>
     <div id="vueApp">
-      <h1>Belajar VueJS</h1>
+      <h1>Daftar Pelajaran</h1>
+      <p>Total Selesai: {{ completedItem}}</p>
 
-      <blog-post
-        title="My journey with Vue"
-        desc="First Journey"
-        readPost="reading"
-      ></blog-post>
-      <blog-post
-        title="Blogging with Vue"
-        desc="First blog"
-        readPost="reading"
-      ></blog-post>
-      <blog-post
-        title="Why Vue is so fun"
-        desc="Fist experience"
-        readPost="reading"
-      ></blog-post>
+      <div>
+        <button @click="showForm = !showForm">Toggle Form</button>
+        <div v-show="showForm">
+          <h3>Add New Data+</h3>
+          <form @submit.prevent="submitForm">
+            <input type="text" name="title" placeholder="title" />
+            <input type="text" name="desc" placeholder="description" />
+            <input type="text" name="image" placeholder="image" />
+            <input type="submit" value="Add New" />
+          </form>
+        </div>
+      </div>
 
-      <p>Total selesai: {{ total }}</p>
+      <div v-for="item in items" class="box" :class="{completed : item.state}">
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.desc }}</p>
+        <img :src="'img/' + item.image " alt="" width="50" height="50" />
+        <input
+          type="checkbox"
+          :checked="item.state"
+          @change="item.state = !item.state"
+        />
+      </div>
     </div>
-
-    <script type="text/x-template" id="blog-template">
-      <h3>{{ title }} : </h3>
-      <p>{{ desc }} </p>
-      <button @click="$emit('readPost', 10)">Selesai</button>
-    </script>
 
     <script src="https://unpkg.com/vue@3"></script>
     <script>
-      const app = Vue.createApp({
+      Vue.createApp({
         data() {
           return {
-            total: 0,
+            showForm: false,
+            items: [
+              {
+                title: "Vue JS",
+                desc: "what a green",
+                image: "Vue js.png",
+                state: true,
+                box: false,
+              },
+              {
+                title: "React JS",
+                desc: "blue from facebook",
+                image: "react js.png",
+                state: false,
+                box: false,
+              },
+              {
+                title: "Angular JS",
+                desc: "what a red",
+                image: "angular js.png",
+                state: false,
+                box: false,
+              },
+            ],
           };
         },
         methods: {
-          reading(num) {
-            this.total = this.total + num;
+          submitForm(event) {
+            const els = event.target.elements;
+
+            let title = els.title.value;
+            let desc = els.desc.value;
+            let image = els.image.value;
+
+            this.items.push({
+              title: title,
+              desc: desc,
+              image: image,
+              state: false,
+            });
+
+            els.title.value = "";
+            els.desc.value = "";
+            els.image.value = "";
+
+            this.showForm = false;
           },
         },
-      });
-
-      app.component("blog-post", {
-        props: ["title", "desc"],
-        template: "#blog-template",
-      });
-
-      app.mount("#vueApp");
+        computed: {
+          completedItem() {
+            return this.items.filter((item) => item.state == true).length;
+          },
+        },
+      }).mount("#vueApp");
     </script>
   </body>
 </html>
